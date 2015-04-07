@@ -1,0 +1,14 @@
+html {
+  background: steelblue;
+}
+
+#graph-canvas {
+    height: 500px;
+    padding: 0;
+    margin: 25px 0;
+}
+
+#graph-data p {
+    font-size: 10pt;
+    font-family: monospace;
+}

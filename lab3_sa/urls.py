@@ -1,0 +1,11 @@
+from django.conf import settings
+from django.conf.urls import patterns, url
+# from django.contrib import admin
+
+urlpatterns = patterns('',
+    url(r'^$', 'lab3.views.home', name='home'),
+    url(r'^graph/$', 'lab3.views.graph', name='graph'),
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+
+    # url(r'^admin/', include(admin.site.urls)),
+)
