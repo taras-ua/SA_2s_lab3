@@ -5,9 +5,9 @@ import urllib.parse
 from numpy import linalg as la
 
 
-def build_request(form):
+def build_request(data):
     request = '/graph/?data='
-    request += urllib.parse.quote_plus(form.cleaned_data['graph_matrix'].replace('\n', ' ').replace('\r', ''))
+    request += urllib.parse.quote_plus(data.replace('\n', ' ').replace('\r', ''))
     return request
 
 
@@ -42,7 +42,8 @@ def get_graph(request):
             eigenstring += '<b>&lambda;<sub>' + str(i+1) + '</sub></b> = ' + str(val) + '<br>'
         return json_graph.node_link_data(graph), matrix_html,\
                str(matrix).replace(']', '],').replace('],],', ']]').replace('\n', '').replace('\r', '').replace('0. ', '0 ').replace(' 0', ', 0').replace(' -0', ', -0').replace('[,', '['),\
-               eigenstring
+               eigenstring,\
+               str(list_of_par_cycles(graph, matrix)).replace('[[', '[').replace(']]', ']').replace('], ', ']<br>').replace(',', ' ->')
     return None
 
 
@@ -53,29 +54,20 @@ def list_of_par_cycles(G, matr):
         i = 0
         cycle_value = 0
         while i < len(cycle)-1:
-            if matr.item((cycle[i], cycle[i+1]))< 0:
+            if matr.item((cycle[i], cycle[i+1])) < 0:
                 cycle_value -= 1
             else:
                 cycle_value += 1
-            i+=1
-        if (cycle_value % 2 == 0):
+            i += 1
+        if cycle_value % 2 == 0:
             cycle.append(cycle[0])
+            for i in range(len(cycle)):
+                cycle[i] += 1
             list_of_par_cycles.append(cycle)
     return list_of_par_cycles
 
-def edit_graph(matr,X,Y):
-    matr_copy = matr.copy()
-    matr_copy[X-1,Y-1] = 0
-    return matr_copy
 
-#matr1 = np.matrix('0 0 1 1;1 0 1 0; 1 1 0 0; 1 0 0 0')
-#print(matr1)
-#matr1 = edit_graph(matr1,1,3)
-#print(matr1)
-#g1 = nx.from_numpy_matrix(matr1,create_using=nx.DiGraph())
-#for element in nx.simple_cycles(g1):
-#    print(element)
-#matr2 = np.matrix('0.2 0 0.1 0.2; 0.2 0.2 0.2 0; 0.1 0.4 0.6 0.2; 0.1 -0.4 -0.6 -0.2')
-#
-#result = number_of_par_cycles(g1,matr2)
-#print(result)
+def edit_graph(matr_string, x, y):
+    matr = np.matrix(matr_string)
+    matr[x-1, y-1] = 0
+    return str(matr).replace('[', '').replace(',', ' ').replace(']]', '').replace(']', ';')

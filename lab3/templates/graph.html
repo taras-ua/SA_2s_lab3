@@ -11,6 +11,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/validator.min.js"></script>
     <script src="{{ STATIC_URL }}js/vis.min.js"></script>
     <script src="{{ STATIC_URL }}js/graph.js"></script>
 </head>
@@ -23,6 +24,32 @@
         <p>{{ matrix_html|safe }}</p>
         <h3>Eigenvalues:</h3>
         <p>{{ eigenvalues|safe }}</p>
+        <h3>Odd cycles:</h3>
+        <p>{{ cycles|safe }}</p>
+    </div>
+    <div id="graph-form" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 well">
+        <h3>Remove edge</h3>
+        <form class="form-horizontal" data-toggle="validator" role="form" method="post">
+            {% csrf_token %}
+            {% load widget_tweaks %}
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="id_x">From:</label>
+                <div class="col-sm-3">
+                    {{ form.x|add_class:"form-control"|attr:"required" }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="id_y">To:</label>
+                <div class="col-sm-3">
+                    {{ form.y|add_class:"form-control"|attr:"required" }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-3">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
     <script type="text/javascript">
         buildGraph({{ nodes|safe }}, {{ edges|safe }}, {{ matrix_json }});

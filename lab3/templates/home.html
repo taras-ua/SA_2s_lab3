@@ -18,7 +18,7 @@
             {% csrf_token %}
             {% load widget_tweaks %}
             <div class="form-group">
-                <label class="control-label col-sm-3" for="id_model">Model:</label>
+                <label class="control-label col-sm-3" for="id_graph_matrix">Matrix:</label>
                 <div class="col-sm-9">
                     {{ form.graph_matrix|add_class:"form-control"|attr:"required" }}
                 </div>

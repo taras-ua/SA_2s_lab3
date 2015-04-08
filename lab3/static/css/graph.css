@@ -12,3 +12,11 @@ html {
     font-size: 10pt;
     font-family: monospace;
 }
+
+.btn {
+    margin-right: 20px;
+}
+
+.form-group:first-of-type {
+    margin-top: 15px;
+}
