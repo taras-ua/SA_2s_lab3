@@ -52,7 +52,7 @@ def home(request):
 
 def graph(request):
     if request.method == 'GET':
-        graph_json, matrix, matrix_json, eig, cycles = controller.get_graph(request)
+        graph_json, matrix, matrix_json, eig, cycles, stability = controller.get_graph(request)
         form = RecreateForm()
         return render_to_response('graph.html', {'nodes': graph_json['nodes'],
                                                  'edges': graph_json['links'],
@@ -60,6 +60,7 @@ def graph(request):
                                                  'matrix_json': matrix_json,
                                                  'eigenvalues': eig,
                                                  'cycles': cycles,
+                                                 'stability': stability,
                                                  'form': form},
                                   context_instance=RequestContext(request))
     if request.method == 'POST':

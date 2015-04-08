@@ -16,9 +16,21 @@
     <script src="{{ STATIC_URL }}js/graph.js"></script>
 </head>
 <body>
-    <div class="col-xs-1 col-md-2"></div>
-    <div id="graph-canvas" class="col-xs-10 col-md-8 well"></div>
-    <div class="col-xs-1 col-md-2"></div>
+    <div id="graph-stable" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 well">
+        <div class="col-xs-4">
+            <h4>Stability in disturbance</h4>
+            <img id="stab0"/>
+        </div>
+        <div class="col-xs-4">
+            <h4>Stability in value</h4>
+            <img id="stab1"/>
+        </div>
+        <div class="col-xs-4">
+            <h4>Structure stability</h4>
+            <img id="stab2"/>
+        </div>
+    </div>
+    <div id="graph-canvas" class="col-xs-10 col-md-8 col-xs-offset-1 col-md-offset-2 well"></div>
     <div id="graph-data" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 well">
         <h3>Adjacency matrix:</h3>
         <p>{{ matrix_html|safe }}</p>
@@ -52,7 +64,7 @@
         </form>
     </div>
     <script type="text/javascript">
-        buildGraph({{ nodes|safe }}, {{ edges|safe }}, {{ matrix_json }});
+        buildGraph({{ nodes|safe }}, {{ edges|safe }}, {{ matrix_json }}, {{ stability|safe }});
     </script>
 </body>
 </html>

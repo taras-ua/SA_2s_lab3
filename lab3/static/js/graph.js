@@ -1,4 +1,4 @@
-function buildGraph(nodes, edges, matrix) {
+function buildGraph(nodes, edges, matrix, stability) {
     var container = document.getElementById('graph-canvas');
     var visEdges = [];
     var visNodes = [];
@@ -24,4 +24,9 @@ function buildGraph(nodes, edges, matrix) {
         height: jContainer.height().toString() + 'px'
     };
     var network = new vis.Network(container, data, options);
+
+    // stability mark
+    for(var k = 0; k < 3; k++) {
+        $('#stab' + k).attr("src", '/static/' + (stability[k] > 0 ? 'yes' : 'no') + '.png');
+    }
 }

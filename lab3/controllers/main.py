@@ -32,6 +32,8 @@ def get_graph(request):
     if graph is not None:
         np.set_printoptions(suppress=True, precision=5)
         eigenvals, eigenvecs = la.eig(matrix)
+        cycle_list = list_of_par_cycles(graph, matrix)
+        stab1, stab2, stab3 = check_stability(eigenvals, cycle_list)
         eigenstring = ''
         matrix_html = ''
         eig_num = 0
@@ -43,7 +45,8 @@ def get_graph(request):
         return json_graph.node_link_data(graph), matrix_html,\
                str(matrix).replace(']', '],').replace('],],', ']]').replace('\n', '').replace('\r', '').replace('0. ', '0 ').replace(' 0', ', 0').replace(' -0', ', -0').replace('[,', '['),\
                eigenstring,\
-               str(list_of_par_cycles(graph, matrix)).replace('[[', '[').replace(']]', ']').replace('], ', ']<br>').replace(',', ' ->')
+               str(cycle_list).replace('[[', '[').replace(']]', ']').replace('], ', ']<br>').replace(',', ' ->'),\
+               '[' + str(stab1) + ',' + str(stab2) + ',' + str(stab3) + ']'
     return None
 
 
@@ -67,17 +70,17 @@ def list_of_par_cycles(G, matr):
     return list_of_par_cycles
 
 
-def check_stability(list_of_self_values , list_of_cycles):
-    stability_in_value = True
-    stability_in_disturbance = True
-    structure_stability = True
+def check_stability(list_of_self_values, list_of_cycles):
+    stability_in_value = 1
+    stability_in_disturbance = 1
+    structure_stability = 1
     for value in list_of_self_values:
-        if(np.absolute(value) >= 1):
-            stability_in_value = False
-        if(np.absolute(value) > 1):
-            stability_in_disturbance = False
-    if(len(list_of_cycles) != 0):
-        structure_stability = False
+        if np.absolute(value) >= 1:
+            stability_in_value = 0
+        if np.absolute(value) > 1:
+            stability_in_disturbance = 0
+    if len(list_of_cycles) != 0:
+        structure_stability = 0
     return stability_in_disturbance, stability_in_value, structure_stability
 
 
