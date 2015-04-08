@@ -46,7 +46,7 @@ def get_graph(request):
     return None
 
 
-def number_of_par_cycles(G, matr):
+def list_of_par_cycles(G, matr):
     cycles_list = nx.simple_cycles(G)
     list_of_par_cycles = []
     for cycle in cycles_list:
@@ -63,7 +63,15 @@ def number_of_par_cycles(G, matr):
             list_of_par_cycles.append(cycle)
     return list_of_par_cycles
 
+def edit_graph(matr,X,Y):
+    matr_copy = matr.copy()
+    matr_copy[X-1,Y-1] = 0
+    return matr_copy
+
 #matr1 = np.matrix('0 0 1 1;1 0 1 0; 1 1 0 0; 1 0 0 0')
+#print(matr1)
+#matr1 = edit_graph(matr1,1,3)
+#print(matr1)
 #g1 = nx.from_numpy_matrix(matr1,create_using=nx.DiGraph())
 #for element in nx.simple_cycles(g1):
 #    print(element)
