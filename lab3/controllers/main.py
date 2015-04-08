@@ -29,4 +29,27 @@ def get_graph(request):
         return json_graph.node_link_data(graph), matrix_string, eigenstring
     return None
 
+def number_of_par_cycles(G,matr):
+    cycles_list = nx.simple_cycles(G)
+    list_of_par_cycles = []
+    for cycle in cycles_list:
+        i = 0
+        cycle_value = 0
+        while i < len(cycle)-1:
+            if matr.item((cycle[i], cycle[i+1]))< 0:
+                cycle_value -= 1
+            else:
+                cycle_value += 1
+            i+=1
+        if (cycle_value % 2 == 0):
+            list_of_par_cycles.append(cycle)
+    return list_of_par_cycles
 
+#matr1 = np.matrix('0 0 1 1;1 0 1 0; 1 1 0 0; 1 0 0 0')
+#g1 = nx.from_numpy_matrix(matr1,create_using=nx.DiGraph())
+#for element in nx.simple_cycles(g1):
+#    print(element)
+#matr2 = np.matrix('0.2 0 0.1 0.2; 0.2 0.2 0.2 0; 0.1 0.4 0.6 0.2; 0.1 -0.4 -0.6 -0.2')
+#
+#result = number_of_par_cycles(g1,matr2)
+#print(result)
