@@ -67,6 +67,20 @@ def list_of_par_cycles(G, matr):
     return list_of_par_cycles
 
 
+def check_stability(list_of_self_values , list_of_cycles):
+    stability_in_value = True
+    stability_in_disturbance = True
+    structure_stability = True
+    for value in list_of_self_values:
+        if(np.absolute(value) >= 1):
+            stability_in_value = False
+        if(np.absolute(value) > 1):
+            stability_in_disturbance = False
+    if(len(list_of_cycles) != 0):
+        structure_stability = False
+    return stability_in_disturbance, stability_in_value, structure_stability
+
+
 def edit_graph(matr_string, x, y):
     matr = np.matrix(matr_string)
     matr[x-1, y-1] = 0
