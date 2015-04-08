@@ -42,6 +42,7 @@ def number_of_par_cycles(G,matr):
                 cycle_value += 1
             i+=1
         if (cycle_value % 2 == 0):
+            cycle.append(cycle[0])
             list_of_par_cycles.append(cycle)
     return list_of_par_cycles
 
