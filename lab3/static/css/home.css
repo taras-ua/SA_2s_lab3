@@ -1,5 +1,9 @@
 html {
-  background: steelblue;
+    background: steelblue;
+}
+
+textarea {
+    font-family: "Courier New", Courier, monospace !important;
 }
 
 .content-holder {
