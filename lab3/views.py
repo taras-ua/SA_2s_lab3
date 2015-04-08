@@ -46,8 +46,10 @@ def home(request):
 
 
 def graph(request):
-    graph_json, matrix, eig = controller.get_graph(request)
+    graph_json, matrix, matrix_json, eig = controller.get_graph(request)
     return render_to_response('graph.html', {'nodes': graph_json['nodes'],
                                              'edges': graph_json['links'],
-                                             'matrix': matrix, 'eigenvalues': eig},
+                                             'matrix_html': matrix,
+                                             'matrix_json': matrix_json,
+                                             'eigenvalues': eig},
                               context_instance=RequestContext(request))
