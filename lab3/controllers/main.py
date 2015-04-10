@@ -58,9 +58,9 @@ def list_of_par_cycles(G, matr):
         cycle_value = 0
         while i < len(cycle)-1:
             if matr.item((cycle[i], cycle[i+1])) < 0:
-                cycle_value -= 1
-            else:
                 cycle_value += 1
+            #else:
+            #    cycle_value += 1
             i += 1
         if cycle_value % 2 == 0:
             cycle.append(cycle[0])
